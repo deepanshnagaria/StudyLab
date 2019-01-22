@@ -24,12 +24,12 @@ class Standard(models.Model):
         ('ENG','English'),
     )
     subject            = models.CharField(
-        max_length=4, 
+        max_length=20, 
         choices=SUBJECTS_TYPE,
         verbose_name='Subjects'
     )
     language            = models.CharField(
-        max_length=3,
+        max_length=20,
         choices = LANGUAGES,
         verbose_name = 'Language',
     )
