@@ -4,6 +4,17 @@ from django.core.validators import RegexValidator
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+# Create your models here.
+class Standards(models.Model):
+    STANDARD_TYPE= (
+            ('11th','11th'),
+            ('12th','12th'),
+            ('13th','13th'),
+            )
+    standard_type = models.CharField(choices=STANDARD_TYPE, max_length=10, verbose_name = 'standard type')
+
+    def __str__(self):
+        return self.standard_type
 
 class Institution(models.Model):
     name                = models.CharField(max_length=40)
@@ -12,7 +23,7 @@ class Institution(models.Model):
     def __str__(self):
         return self.name
 
-class Standard(models.Model):
+class Subjects(models.Model):
     SUBJECTS_TYPE = (
         ('PHY','Physics'),
         ('CHEM','Chemistry'),
