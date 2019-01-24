@@ -46,3 +46,18 @@ class Subjects(models.Model):
     )
     def __str__(self):
         return self.subject
+
+
+class Phase(models.Model):
+    PHASE_TYPE = (
+        ('P1','Phase 1'),
+        ('P2','Phase 2'),
+        ('P3','Phase 3')
+    )
+    phase                = models.CharField(
+        choices = PHASE_TYPE,
+        max_length = 20
+    )
+    def __str__(self):
+        return self.phase
+        
