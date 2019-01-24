@@ -50,4 +50,4 @@ class SubjectClasses(models.Model):
             )
 
     def __str__(self):
-        return self.center
+        return str(self.classes)
