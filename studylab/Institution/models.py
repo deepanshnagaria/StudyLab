@@ -1,5 +1,6 @@
 from django.db import models
 from core.models import *
+from datetime import datetime, timedelta
 
 class Center(models.Model):
 
@@ -20,6 +21,10 @@ class Batch(models.Model):
             Institution,
             on_delete = models.CASCADE
             )
+    phase = models.ForeignKey(
+            Phase,
+            on_delete = models.CASCADE
+            )
     name = models.CharField(max_length=40, verbose_name="batch name")
     
     def __str__(self):
@@ -29,6 +34,10 @@ class Classes(models.Model):
 
     center = models.ForeignKey(
             Center,
+            on_delete = models.CASCADE
+            )
+    phase = models.ForeignKey(
+            Phase,
             on_delete = models.CASCADE
             )
     batch = models.ForeignKey(
