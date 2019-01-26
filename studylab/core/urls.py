@@ -1,6 +1,6 @@
 from django.urls import path
-from . import views
+from .views import InstitutionView
 
 urlpatterns = [
-
+        path('institution', InstitutionView.as_view())
 ]
