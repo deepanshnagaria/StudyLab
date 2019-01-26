@@ -1,6 +1,4 @@
-db.sqlite3
-core/__pycache__/*
-Institution/__pycache__*
-Institution/migrations*
-core/migrations*
-*.swp
+.idea
+.env
+*.pyc
+*/migrations/*
