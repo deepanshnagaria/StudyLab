@@ -11,6 +11,7 @@ class InstitutionView(mixins.CreateModelMixin,
                         generics.ListAPIView):
 
     serializer_class = InstitutionSerializer
+    queryset = Institution.objects.all()
     def get(self, request):
         institutions = Institution.objects.all()
         serializer = InstitutionSerializer(institutions, many=True)

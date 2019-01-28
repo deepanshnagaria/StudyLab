@@ -7,6 +7,7 @@ class Center(models.Model):
     institution = models.ForeignKey(
             Institution,
             on_delete = models.CASCADE
+            # related_name='center_name',
             )
     name = models.CharField(max_length=40, verbose_name="center name")
     address = models.CharField(max_length=60, verbose_name="address")
