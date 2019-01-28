@@ -5,4 +5,5 @@ from . import views
 urlpatterns = [
     url('institution', views.InstitutionView.as_view()),
     url('subjects', views.SubjectsView.as_view()),
+    url('phase', views.PhaseView.as_view()),
 ]
