@@ -1,9 +1,14 @@
 from rest_framework import serializers
-from .models import Institution
+from .models import *
 
-class InstitutionSerializer(serializers.Serializer):
-    name = serializers.CharField(max_length=40)
-    headquarters = serializers.CharField(max_length=40)
+class InstitutionSerializer(serializers.ModelSerializer):
 
-    def create(self, validated_data):
-        return Institution.objects.create(**validated_data)
+    class Meta:
+        model = Institution
+        fields = '__all__'
+
+class SubjectsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Subjects
+        fields = "__all__"
