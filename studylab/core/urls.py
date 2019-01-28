@@ -1,6 +1,8 @@
+from django.conf.urls import url
 from django.urls import path
-from .views import InstitutionView
+from . import views
 
 urlpatterns = [
-        path('institution', InstitutionView.as_view())
+    url('institution', views.InstitutionView.as_view()),
+    url('subjects', views.SubjectsView.as_view()),
 ]
