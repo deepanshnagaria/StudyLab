@@ -11,6 +11,7 @@ class InstitutionView(mixins.CreateModelMixin,
                         generics.ListAPIView):
 
     serializer_class = InstitutionSerializer
+    queryset = Institution.objects.all()
     def get(self, request):
         institutions = Institution.objects.all()
         serializer = InstitutionSerializer(institutions, many=True)
@@ -23,6 +24,7 @@ class SubjectsView(mixins.CreateModelMixin,
                         mixins.RetrieveModelMixin,
                         generics.ListAPIView):
 
+    queryset = Subjects.objects.all()
     serializer_class = SubjectsSerializer
     def get(self, request):
         subjects = Subjects.objects.all()
@@ -37,6 +39,7 @@ class PhaseView(mixins.CreateModelMixin,
                         generics.ListAPIView):
 
     serializer_class = PhaseSerializer
+    queryset = Phase.objects.all()
     def get(self, request):
         phaseData = Phase.objects.all()
         serializer = PhaseSerializer(phaseData, many=True)

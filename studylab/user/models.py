@@ -5,12 +5,13 @@ from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import BaseUserManager
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
+from core.models import Institution
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password, **extra_fields):
         if not email:
             raise ValueError('Enter email')
-
+        
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
@@ -26,11 +27,12 @@ class UserManager(BaseUserManager):
         return user
 
 class User(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(_('email address'), unique=True)
-    first_name = models.CharField(_('first name'), max_length=30, blank=True)
-    last_name = models.CharField(_('last name'), max_length=30, blank=True)
-    date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
-    is_active = models.BooleanField(_('active'), default=True)
+    institution         = models.OneToOneField(Institution,on_delete=models.CASCADE)
+    email               = models.EmailField(_('email address'), unique=True)
+    first_name          = models.CharField(_('first name'), max_length=30, blank=True)
+    last_name           = models.CharField(_('last name'), max_length=30, blank=True)
+    date_joined         = models.DateTimeField(_('date joined'), auto_now_add=True)
+    is_active           = models.BooleanField(_('active'), default=True)
 
     is_staff = models.BooleanField(
         verbose_name='Staff Status',
