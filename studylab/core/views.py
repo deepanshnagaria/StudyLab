@@ -1,11 +1,10 @@
-# from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework import generics,mixins,permissions
 from rest_framework.views import APIView
-from .models import Institution, Subjects
+from .models import Institution, Subjects, Phase
 from rest_framework.permissions import IsAuthenticated
 
-from .serializers import InstitutionSerializer, SubjectsSerializer
+from .serializers import InstitutionSerializer, SubjectsSerializer, PhaseSerializer
 
 class InstitutionView(mixins.CreateModelMixin,
                         mixins.RetrieveModelMixin,
@@ -18,27 +17,30 @@ class InstitutionView(mixins.CreateModelMixin,
         return Response(serializer.data)
 
     def post(self, request,*args, **kwargs):
-        # data1 = request.data
-        # print(data1)
-        # serializer = InstitutionSerializer(data1)
-        # if serializer.is_valid(data=data1):
-        #     Institution_saved = serializer.save()
-        # return Response({"success": "Institution '{}' created successfully".format(Institution_saved.name)})
         return self.create(request,*args,**kwargs)
 
+class SubjectsView(mixins.CreateModelMixin,
+                        mixins.RetrieveModelMixin,
+                        generics.ListAPIView):
 
-class SubjectsView(APIView):
-
+    serializer_class = SubjectsSerializer
     def get(self, request):
         subjects = Subjects.objects.all()
         serializer = SubjectsSerializer(subjects, many=True)
-        return Response({"subjects": serializer.data})
+        return Response(serializer.data)
 
-    # def post(self, request):
-    #     # Institution = request.data.get('Institution')
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
-    #     serializer = InstitutionSerializer(data=request.data)
-    #     if serializer.is_valid(raise_exception=True):
-    #         Institution_saved = serializer.save()
-    #     return Response({"success": "Institution '{}' created successfully".format(Institution_saved.name)})
+class PhaseView(mixins.CreateModelMixin,
+                        mixins.RetrieveModelMixin,
+                        generics.ListAPIView):
 
+    serializer_class = PhaseSerializer
+    def get(self, request):
+        phaseData = Phase.objects.all()
+        serializer = PhaseSerializer(phaseData, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, *kwargs)
