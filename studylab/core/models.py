@@ -17,46 +17,48 @@ class Standards(models.Model):
         return self.standard_type
 
 class Institution(models.Model):
-    name                = models.CharField(max_length=40,null=True)
-    headquarters        = models.CharField(max_length=40)
+    name = models.CharField(max_length=40)
+    headquarters = models.CharField(max_length=40)
 
     def __str__(self):
         return self.name
 
 class Subjects(models.Model):
     SUBJECTS_TYPE = (
-        ('PHY','Physics'),
-        ('CHEM','Chemistry'),
-        ('MATH','Maths'),
-        ('BIOL','Biology')
+        ('PHY', 'Physics'),
+        ('CHEM', 'Chemistry'),
+        ('MATH', 'Maths'),
+        ('BIOL', 'Biology')
     )
     LANGUAGES = (
-        ('HIN','Hindi'),
-        ('ENG','English'),
+        ('HIN', 'Hindi'),
+        ('ENG', 'English'),
     )
-    subject            = models.CharField(
-        max_length=20, 
+    subject = models.CharField(
+        max_length=20,
         choices=SUBJECTS_TYPE,
         verbose_name='Subjects'
     )
-    language            = models.CharField(
+    language = models.CharField(
         max_length=20,
-        choices = LANGUAGES,
-        verbose_name = 'Language',
+        choices=LANGUAGES,
+        verbose_name='Language',
     )
+
     def __str__(self):
         return self.subject
-
 
 class Phase(models.Model):
     PHASE_TYPE = (
         ('P1','Phase 1'),
         ('P2','Phase 2'),
-        ('P3','Phase 3')
+        ('P3','Phase 3'),
+        ('NO','None')
     )
     phase                = models.CharField(
         choices = PHASE_TYPE,
-        max_length = 20
+        max_length = 20,
+        default = 'NO'
     )
     def __str__(self):
         return self.phase
