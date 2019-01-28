@@ -18,12 +18,6 @@ class InstitutionView(mixins.CreateModelMixin,
         return Response(serializer.data)
 
     def post(self, request,*args, **kwargs):
-        # data1 = request.data
-        # print(data1)
-        # serializer = InstitutionSerializer(data1)
-        # if serializer.is_valid(data=data1):
-        #     Institution_saved = serializer.save()
-        # return Response({"success": "Institution '{}' created successfully".format(Institution_saved.name)})
         return self.create(request,*args,**kwargs)
 
 
