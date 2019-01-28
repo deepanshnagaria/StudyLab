@@ -3,6 +3,8 @@ from .models import *
 
 class InstitutionSerializer(serializers.ModelSerializer):
 
+    # center_name = serializers.StringRelatedField(many=True)
+
     class Meta:
         model = Institution
         fields = '__all__'
