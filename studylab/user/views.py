@@ -7,14 +7,14 @@ from rest_framework.authentication import TokenAuthentication, SessionAuthentica
 from rest_framework.authtoken.models import Token
 
 from .serializers import CreateSerializer, AuthTokenSerializer, userSerializer
+from .models import User
 
 class NewUser(APIView):
     authentication_classes = []
     permission_classes = []
     serializer_class = CreateSerializer
 
-    @staticmethod
-    def post(request):
+    def post(self,request):
         serializer = CreateSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             user = serializer.save()
@@ -43,7 +43,9 @@ class Login(APIView):
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
+        email = serializer.validated_data['email']
+        # print(request.data)
+        user = User.objects.get(email = email)
         token, created = Token.objects.get_or_create(user=user)
         login(request, user)
         user_data = userSerializer(user, context={'request': request}).data
@@ -51,7 +53,6 @@ class Login(APIView):
         return Response(user_data, status=status.HTTP_202_ACCEPTED)
 
 class Logout(APIView):
-    @staticmethod
     def get(request, format=None):
         # simply delete the token to force a login
         request.user.auth_token.delete()

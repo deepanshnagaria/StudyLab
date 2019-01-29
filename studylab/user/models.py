@@ -6,6 +6,7 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from core.models import Institution
+from django.core.validators import MaxValueValidator
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password,  **extra_fields):
@@ -27,17 +28,17 @@ class UserManager(BaseUserManager):
         return user
 
 class User(AbstractBaseUser, PermissionsMixin):
-    USER_TYPES = (
-        ('FAC','FACULTY'),
-        ('STA','STAFF'),
-        ('STU','STUDENT')
-    )
-    user_type           = models.CharField(max_length=3,choices = USER_TYPES)
     email               = models.EmailField(_('email address'), unique=True)
-    first_name          = models.CharField(_('first name'), max_length=30, blank=True)
-    last_name           = models.CharField(_('last name'), max_length=30, blank=True)
+    nameOfHOD           = models.CharField(_('Name Of HOD'),max_length=40)
+    instituteName       = models.CharField(_('Institute Name'),max_length=40)
+    contactNo           = models.PositiveIntegerField(validators=[MaxValueValidator(9999999999)],blank=True,null=True,unique=True)
+    headquarters        = models.CharField(_('Headquarters'),max_length=40)
+    chairperson         = models.CharField(_('Chairperson Name'),max_length=40,unique=True)
+    chairpersonContact  = models.PositiveIntegerField(validators=[MaxValueValidator(9999999999)],blank=True,null=True,unique=True)
     date_joined         = models.DateTimeField(_('date joined'), auto_now_add=True)
     is_active           = models.BooleanField(_('active'), default=True)
+    licenceNo           = models.CharField(_('Licence No.'),max_length=40,unique=True)
+
 
     is_staff = models.BooleanField(
         verbose_name='Staff Status',
@@ -53,19 +54,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = _('user')
         verbose_name_plural = _('users')
-
-    def get_full_name(self):
-        '''
-        Returns the first_name plus the last_name, with a space in between.
-        '''
-        full_name = '%s %s' % (self.first_name, self.last_name)
-        return full_name.strip()
-
-    def get_short_name(self):
-        '''
-        Returns the short name for the user.
-        '''
-        return self.first_name
 
 class Course(models.Model):
     slug = models.SlugField(max_length=100)

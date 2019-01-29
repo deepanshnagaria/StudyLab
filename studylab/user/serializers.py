@@ -29,8 +29,14 @@ class CreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
+            'instituteName',
             'email',
-            'password',
+            'contactNo',
+            'headquarters',
+            'chairperson',
+            'chairpersonContact',
+            'licenceNo',
+            'password',            
         ]
         read_only_fields = ['key']
 
