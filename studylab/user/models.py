@@ -8,10 +8,10 @@ from django.conf import settings
 from core.models import Institution
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, password, **extra_fields):
+    def create_user(self, email, password,  **extra_fields):
         if not email:
             raise ValueError('Enter email')
-        
+
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
@@ -27,7 +27,12 @@ class UserManager(BaseUserManager):
         return user
 
 class User(AbstractBaseUser, PermissionsMixin):
-    institution         = models.OneToOneField(Institution,on_delete=models.CASCADE)
+    USER_TYPES = (
+        ('FAC','FACULTY'),
+        ('STA','STAFF'),
+        ('STU','STUDENT')
+    )
+    user_type           = models.CharField(max_length=3,choices = USER_TYPES)
     email               = models.EmailField(_('email address'), unique=True)
     first_name          = models.CharField(_('first name'), max_length=30, blank=True)
     last_name           = models.CharField(_('last name'), max_length=30, blank=True)
