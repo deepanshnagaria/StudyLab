@@ -17,7 +17,7 @@ class Standards(models.Model):
         return self.standard_type
 
 class Institution(models.Model):
-    name = models.CharField(max_length=40)
+    name = models.CharField(max_length=40, verbose_name="institution name")
     headquarters = models.CharField(max_length=40)
 
     def __str__(self):

@@ -2,6 +2,8 @@ from rest_framework import serializers
 from rest_framework.response import Response
 from django.contrib.auth import authenticate, login, logout
 from .models import *
+from core.serializers import InstitutionSerializer
+from core.models import Institution
 
 
 class AuthTokenSerializer(serializers.Serializer):
@@ -25,20 +27,31 @@ class AuthTokenSerializer(serializers.Serializer):
 
 class CreateSerializer(serializers.ModelSerializer):
     password = serializers.CharField(required=True, style={'input_type': 'password'})
+    institution = InstitutionSerializer()
 
     class Meta:
         model = User
         fields = [
-            'instituteName',
+            'institution',
             'email',
             'contactNo',
-            'headquarters',
             'chairperson',
             'chairpersonContact',
             'licenceNo',
             'password',            
         ]
         read_only_fields = ['key']
+
+    def create(self, validated_data):
+       institution = validated_data['institution']
+       del validated_data['institution']
+       institutionData = Institution.objects.create(**institution)
+
+       userData = User.objects.create(**validated_data)
+       userData.institution = institutionData
+
+       userData.save()
+       return userData
 
 class userSerializer(serializers.ModelSerializer):
     class Meta:
