@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'Institution.apps.InstitutionConfig',
     'data.apps.DataConfig',
-    'user.apps.UserConfig'
+    'user.apps.UserConfig',
+    'testpaper.apps.TestpaperConfig'
+
 ]
 
 MIDDLEWARE = [
