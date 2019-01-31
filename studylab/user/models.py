@@ -28,17 +28,15 @@ class UserManager(BaseUserManager):
         return user
 
 class User(AbstractBaseUser, PermissionsMixin):
+    institution         = models.ForeignKey( Institution, on_delete = models.CASCADE, null=True)
     email               = models.EmailField(_('email address'), unique=True)
     nameOfHOD           = models.CharField(_('Name Of HOD'),max_length=40)
-    instituteName       = models.CharField(_('Institute Name'),max_length=40)
     contactNo           = models.PositiveIntegerField(validators=[MaxValueValidator(9999999999)],blank=True,null=True,unique=True)
-    headquarters        = models.CharField(_('Headquarters'),max_length=40)
     chairperson         = models.CharField(_('Chairperson Name'),max_length=40,unique=True)
     chairpersonContact  = models.PositiveIntegerField(validators=[MaxValueValidator(9999999999)],blank=True,null=True,unique=True)
     date_joined         = models.DateTimeField(_('date joined'), auto_now_add=True)
     is_active           = models.BooleanField(_('active'), default=True)
     licenceNo           = models.CharField(_('Licence No.'),max_length=40,unique=True)
-
 
     is_staff = models.BooleanField(
         verbose_name='Staff Status',
