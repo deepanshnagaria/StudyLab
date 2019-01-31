@@ -17,5 +17,5 @@ class CenterView(mixins.CreateModelMixin,
         serializer = CenterSerializer(centerData, many=True)
         return Response(serializer.data)
 
-    # def post(self, request,*args, **kwargs):
-    #     return self.create(request,*args,**kwargs)
+    def post(self, request,*args, **kwargs):
+        return self.create(request,*args,**kwargs)

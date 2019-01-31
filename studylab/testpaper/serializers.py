@@ -29,22 +29,31 @@ class TestSerializer(serializers.ModelSerializer):
 
 class PaperSerializer(serializers.ModelSerializer):
     test = TestSerializer()
+    testpaper = TestPapersSerializer()
     class Meta:
         model = Paper
         fields = [
             'name',
             'date',
             'starttime',
-            'duration',
+            'endtime',
             'uid',
             'test',
-            'questions'
+            'testpaper',
+            'questions',
+            'type'
         ]
     
     def create(self,validated_data):
+        print(validated_data)
         testdata = validated_data['test']
+        testpaperdata = validated_data['testpaper']
         del validated_data['test']
-        print(testdata)
+        del validated_data['testpaper']
+        testpaper_temp = TestPapers.objects.create(
+            **testpaperdata
+        )
+
         test_temp = Test.objects.create(
             **testdata
         )

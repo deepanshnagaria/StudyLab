@@ -17,13 +17,18 @@ class Test(models.Model):
         return self.name
     
 class Paper(models.Model):
+    TYPE = (
+        ('DPP','DPP'),
+        ('TES','TEST')
+    )
     name                = models.CharField(_('Paper Name'),max_length=40)  
     date                = models.DateField(auto_now=False,auto_now_add=False)
     starttime           = models.TimeField()
-    duration            = models.TimeField()
+    endtime             = models.TimeField()
     uid                 = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     test                = models.ForeignKey(Test,on_delete=models.CASCADE)
     questions           = models.TextField()
+    type                = models.CharField(choices=TYPE,max_length=4,default='DPP')
 
     def __str__(self):
         return self.name

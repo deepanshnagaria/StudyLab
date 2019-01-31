@@ -25,5 +25,6 @@ urlpatterns = [
     path('v1/api', include('Institution.urls')),
     path('v1/api', include('core.urls')),
     path('v1/api/', include('user.urls')),
+    path('v1/api/', include('testpaper.urls')),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

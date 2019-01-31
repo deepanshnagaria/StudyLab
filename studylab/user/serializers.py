@@ -38,7 +38,8 @@ class CreateSerializer(serializers.ModelSerializer):
             'chairperson',
             'chairpersonContact',
             'licenceNo',
-            'password',            
+            'password',
+            'nameOfHOD'            
         ]
         read_only_fields = ['key']
 
