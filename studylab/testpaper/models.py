@@ -2,7 +2,7 @@ from django.db import models
 from Institution.models import *
 from django.utils.translation import ugettext_lazy as _
 import uuid
-
+from core.models import *
 class TestPapers(models.Model):
     center              = models.ForeignKey(Center,on_delete=models.CASCADE)
     
@@ -33,4 +33,7 @@ class Paper(models.Model):
     def __str__(self):
         return self.name
        
-    
+class File(models.Model):
+  file = models.FileField(blank=False, null=False)
+  remark = models.CharField(max_length=20)
+  timestamp = models.DateTimeField(auto_now_add=True)

@@ -61,5 +61,10 @@ class PaperSerializer(serializers.ModelSerializer):
         paper.testdata = test_temp
         paper.save()
         return paper
+
+class FileSerializer(serializers.ModelSerializer):
+  class Meta():
+    model = File
+    fields = ('file', 'remark', 'timestamp')
         
 
