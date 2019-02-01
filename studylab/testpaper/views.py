@@ -1,3 +1,5 @@
+import os.path
+
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework import generics,mixins
@@ -7,12 +9,12 @@ from rest_framework import generics, parsers, renderers, routers, serializers, v
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 from rest_framework.authtoken.models import Token
 from .serializers import PaperSerializer,TestPapersSerializer,TestSerializer
-from .models import *
 from rest_framework import viewsets
-from .serializers import PaperSerializer,TestPapersSerializer,FileSerializer
-from .models import *
 from rest_framework.parsers import MultiPartParser, FormParser
 
+from .paper_extractor import scrap_docx
+from .models import *
+from .serializers import PaperSerializer,TestPapersSerializer,FileSerializer
 
 class QuestionsView(generics.ListCreateAPIView):
     queryset = Paper.objects.all()
@@ -48,6 +50,11 @@ class FileView(APIView):
     file_serializer = FileSerializer(data=request.data)
     if file_serializer.is_valid():
       file_serializer.save()
+      filedata = file_serializer.data['file']
+      BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+      filedata = os.path.join(BASE_DIR + filedata)
+      print(scrap_docx(filedata))
+      (data, baseimg) = scrap_docx(filedata)
       return Response(file_serializer.data, status=status.HTTP_201_CREATED)
     else:
       return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)

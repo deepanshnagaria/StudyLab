@@ -62,6 +62,9 @@ class MarkingScheme(models.Model):
         return str(self.paper)
     
 class File(models.Model):
-  file = models.FileField(blank=False, null=False)
-  remark = models.CharField(max_length=20)
-  timestamp = models.DateTimeField(auto_now_add=True)
+    file = models.FileField(blank=False, null=False)
+    remark = models.CharField(max_length=20)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.file)

@@ -225,12 +225,4 @@ def scrap_docx(docx_file):
     data=getcompletejson(docx,rids2uuid)
     return data,uuid2base64img
 
-
 # In[21]:
-
-
-data,img=scrap_docx('Paper 1.docx')
-
-
-
-
