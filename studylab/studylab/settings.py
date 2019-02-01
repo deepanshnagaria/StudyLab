@@ -25,7 +25,7 @@ SECRET_KEY = '^lx3s0)7^=(s0w^d=u2oau$mu1(9i5htp#ss5ijjvu*tydo*eg'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.0.44','localhost','127.0.0.1']
 
 
 # Application definition
@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'Institution.apps.InstitutionConfig',
     'data.apps.DataConfig',
     'user.apps.UserConfig',
-    'testpaper.apps.TestpaperConfig'
+    'testpaper.apps.TestpaperConfig',
+    'rest_framework_docs'
 
 ]
 

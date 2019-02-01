@@ -18,13 +18,14 @@ from django.urls import path
 from django.urls import include
 from django.conf import settings
 from django.conf.urls.static import static
-
-
+# from rest_framework_docs.views import DRFDocsView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('v1/api', include('Institution.urls')),
     path('v1/api', include('core.urls')),
     path('v1/api/', include('user.urls')),
     path('v1/api/', include('testpaper.urls')),
+    # path('v1/api/docs/', include('rest_framework_docs.urls')),
+    # path('api/docs/$', DRFDocsView.as_view(), name='drfdocs'),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
