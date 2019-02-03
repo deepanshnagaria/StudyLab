@@ -12,6 +12,7 @@ from . import views
 urlpatterns = [
         path('testpaper/create/', views.TestPaperView.as_view()),
         path('questions/', views.QuestionsView.as_view()),
+        path('questions/<path>', views.GetCurrentPathView.as_view(), name = "path"),
         path('test/',views.TestView.as_view()),
-        path('questions/upload',views.FileView.as_view())
+        path('questions/upload',views.FileView.as_view()),
 ]
