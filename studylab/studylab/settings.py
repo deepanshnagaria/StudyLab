@@ -25,7 +25,7 @@ SECRET_KEY = '^lx3s0)7^=(s0w^d=u2oau$mu1(9i5htp#ss5ijjvu*tydo*eg'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'Institution.apps.InstitutionConfig',
     'data.apps.DataConfig',
     'user.apps.UserConfig',
-    'testpaper.apps.TestpaperConfig'
+    'testpaper.apps.TestpaperConfig',
+    'rest_framework_docs'
 
 ]
 
@@ -80,7 +81,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated', )
+        'rest_framework.permissions.AllowAny', )
 }
 
 WSGI_APPLICATION = 'studylab.wsgi.application'
@@ -135,3 +136,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")

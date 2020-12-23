@@ -8,17 +8,25 @@ class TestPapersSerializer(serializers.ModelSerializer):
         model = TestPapers
         fields = '__all__'
 
+class BatchesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Batches
+        fields = '__all__'
+
+
+
 class TestSerializer(serializers.ModelSerializer):
-    test = TestPapersSerializer()
+    testp = TestPapersSerializer()
     class Meta:
         model = Test
         fields =  [
             'name',
-            'test'
+            'testp'
         ]
     def create(self,validated_data):
-        test = validated_data['test']
-        del validated_data['test']
+        test = validated_data['testp']
+        print(validated_data)
+        del validated_data['testp']
         test_temp = TestPapers.objects.create(
             **test
         )
@@ -29,7 +37,8 @@ class TestSerializer(serializers.ModelSerializer):
 
 class PaperSerializer(serializers.ModelSerializer):
     test = TestSerializer()
-    testpaper = TestPapersSerializer()
+    batch = BatchesSerializer(many=True)
+    # testpaper = TestPapersSerializer()
     class Meta:
         model = Paper
         fields = [
@@ -39,27 +48,49 @@ class PaperSerializer(serializers.ModelSerializer):
             'endtime',
             'uid',
             'test',
-            'testpaper',
+            # 'testpaper',
             'questions',
-            'type'
+            'type',
+            'batch'
         ]
     
     def create(self,validated_data):
-        print(validated_data)
+        
         testdata = validated_data['test']
-        testpaperdata = validated_data['testpaper']
+        print(validated_data)
+
+
+        
+        testpaperdata = validated_data['test']['testp']
+        print(testpaperdata)
         del validated_data['test']
-        del validated_data['testpaper']
-        testpaper_temp = TestPapers.objects.create(
+        # del validated_data['testpaper']
+        testpaper_temp = Test.TestPapers.objects.create(
             **testpaperdata
         )
-
+        
         test_temp = Test.objects.create(
             **testdata
         )
         paper = Paper.objects.create(**validated_data)
+        paper.testpaperdata = testpaper_temp
         paper.testdata = test_temp
         paper.save()
         return paper
-        
 
+class FileSerializer(serializers.ModelSerializer):
+  class Meta():
+    model = File
+    fields = ('file', 'remark', 'timestamp')
+        
+class MarkingSchemeSerializer(serializers.ModelSerializer):
+    paper = PaperSerializer()
+    class Meta:
+        model = Batches
+        fields = [
+            'question_type',
+            'marksPositive',
+            'marksNegative',
+            'marksPerCorrect',
+            'paper'
+        ]
